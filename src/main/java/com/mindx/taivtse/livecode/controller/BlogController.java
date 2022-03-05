@@ -35,13 +35,13 @@ public class BlogController {
         return ResponseEntity.ok(blogsResponse);
     }
 
-    @PostMapping("/comments")
+    @PostMapping("/{blogId}/comments")
     public ResponseEntity<AddCommentResponse> addComment(@RequestBody AddCommentRequest request) {
         AddCommentResponse addCommentResponse = blogService.addComment(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(addCommentResponse);
     }
 
-    @GetMapping("/comments/{blogId}")
+    @GetMapping("/{blogId}/comments")
     public ResponseEntity<CommentsResponse> getBlogComments(@PathVariable Long blogId) {
         CommentsResponse commentsResponse = blogService.getBlogComments(blogId);
         return ResponseEntity.ok(commentsResponse);
