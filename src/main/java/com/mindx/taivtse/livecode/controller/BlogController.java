@@ -1,8 +1,11 @@
 package com.mindx.taivtse.livecode.controller;
 
 import com.mindx.taivtse.livecode.dto.request.BlogCreationRequest;
+import com.mindx.taivtse.livecode.dto.request.AddCommentRequest;
+import com.mindx.taivtse.livecode.dto.response.AddCommentResponse;
 import com.mindx.taivtse.livecode.dto.response.BlogCreationResponse;
 import com.mindx.taivtse.livecode.dto.response.BlogsResponse;
+import com.mindx.taivtse.livecode.dto.response.CommentsResponse;
 import com.mindx.taivtse.livecode.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,5 +33,17 @@ public class BlogController {
     public ResponseEntity<BlogsResponse> getAllBlogs() {
         BlogsResponse blogsResponse = blogService.getAllBlogs();
         return ResponseEntity.ok(blogsResponse);
+    }
+
+    @PostMapping("/comments")
+    public ResponseEntity<AddCommentResponse> addComment(@RequestBody AddCommentRequest request) {
+        AddCommentResponse addCommentResponse = blogService.addComment(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(addCommentResponse);
+    }
+
+    @GetMapping("/comments/{blogId}")
+    public ResponseEntity<CommentsResponse> getBlogComments(@PathVariable Long blogId) {
+        CommentsResponse commentsResponse = blogService.getBlogComments(blogId);
+        return ResponseEntity.ok(commentsResponse);
     }
 }

@@ -1,15 +1,12 @@
 package com.mindx.taivtse.livecode.service.impl;
 
+import com.mindx.taivtse.livecode.dto.request.AddCommentRequest;
 import com.mindx.taivtse.livecode.dto.request.BlogCreationRequest;
-import com.mindx.taivtse.livecode.dto.response.BlogCreationResponse;
-import com.mindx.taivtse.livecode.dto.response.BlogResponse;
-import com.mindx.taivtse.livecode.dto.response.BlogsResponse;
+import com.mindx.taivtse.livecode.dto.response.*;
 import com.mindx.taivtse.livecode.entity.Blog;
+import com.mindx.taivtse.livecode.entity.Comment;
 import com.mindx.taivtse.livecode.entity.User;
-import com.mindx.taivtse.livecode.repository.BlogRepository;
-import com.mindx.taivtse.livecode.repository.TagRelationRepository;
-import com.mindx.taivtse.livecode.repository.TagRepository;
-import com.mindx.taivtse.livecode.repository.UserRepository;
+import com.mindx.taivtse.livecode.repository.*;
 import com.mindx.taivtse.livecode.service.BlogService;
 import com.mindx.taivtse.livecode.service.TagService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +29,7 @@ public class BlogServiceImpl implements BlogService {
 
     private final BlogRepository blogRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
     private final TagService tagService;
 
     @Override
@@ -85,6 +83,38 @@ public class BlogServiceImpl implements BlogService {
                 .collect(Collectors.toList());
         return BlogsResponse.builder()
                 .blogs(blogResponses)
+                .build();
+    }
+
+    @Override
+    public AddCommentResponse addComment(AddCommentRequest request) {
+        Comment comment = Comment.builder()
+                .content(request.getContent())
+                .blogId(request.getBlogId())
+                .userId(1L)  // TODO
+                .build();
+
+        comment = commentRepository.save(comment);
+        return AddCommentResponse.builder()
+                .commentId(comment.getId())
+                .build();
+    }
+
+    @Override
+    public CommentsResponse getBlogComments(Long blogId) {
+        List<Comment> comments = commentRepository.findAllByBlogId(blogId);
+        List<CommentResponse> commentResponses = comments.stream()
+                .map(comment -> {
+                    return CommentResponse.builder()
+                            .commentId(comment.getId())
+                            .userId(comment.getUserId())
+                            .content(comment.getContent())
+                            .build();
+                })
+                .collect(Collectors.toList());
+
+        return CommentsResponse.builder()
+                .comments(commentResponses)
                 .build();
     }
 }
