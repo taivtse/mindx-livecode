@@ -12,6 +12,5 @@ import java.util.List;
 @Getter
 @Setter
 public class AddCommentRequest {
-    private Long blogId;
     private String content;
 }

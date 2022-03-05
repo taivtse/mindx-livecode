@@ -36,8 +36,9 @@ public class BlogController {
     }
 
     @PostMapping("/{blogId}/comments")
-    public ResponseEntity<AddCommentResponse> addComment(@RequestBody AddCommentRequest request) {
-        AddCommentResponse addCommentResponse = blogService.addComment(request);
+    public ResponseEntity<AddCommentResponse> addComment(@PathVariable Long blogId,
+                                                         @RequestBody AddCommentRequest request) {
+        AddCommentResponse addCommentResponse = blogService.addComment(blogId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(addCommentResponse);
     }
 

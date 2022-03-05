@@ -87,10 +87,10 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public AddCommentResponse addComment(AddCommentRequest request) {
+    public AddCommentResponse addComment(Long blogId, AddCommentRequest request) {
         Comment comment = Comment.builder()
                 .content(request.getContent())
-                .blogId(request.getBlogId())
+                .blogId(blogId)
                 .userId(1L)  // TODO
                 .build();
 

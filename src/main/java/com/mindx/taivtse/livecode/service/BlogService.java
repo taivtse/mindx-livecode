@@ -14,6 +14,6 @@ import com.mindx.taivtse.livecode.dto.response.CommentsResponse;
 public interface BlogService {
     BlogCreationResponse createBlog(BlogCreationRequest request);
     BlogsResponse getAllBlogs();
-    AddCommentResponse addComment(AddCommentRequest request);
+    AddCommentResponse addComment(Long blogId, AddCommentRequest request);
     CommentsResponse getBlogComments(Long blogId);
 }
