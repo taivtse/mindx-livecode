@@ -1,1 +1,0 @@
-INSERT INTO public."user" (id, username, password, full_name) VALUES (DEFAULT, 'taivtse', 'test', 'Võ Thành Tài')
