@@ -1,8 +1,19 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath "com.avast.gradle:gradle-docker-compose-plugin:0.14.11"
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.6.4'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
+
+apply plugin: 'docker-compose'
 
 group = 'com.mindx.taivtse'
 version = '0.0.1-SNAPSHOT'
@@ -30,4 +41,8 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+dockerCompose {
+	useComposeFiles = ['src/main/docker/docker-compose.yml']
 }
