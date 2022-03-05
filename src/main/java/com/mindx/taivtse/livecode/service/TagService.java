@@ -4,6 +4,7 @@ import com.mindx.taivtse.livecode.entity.Blog;
 import com.mindx.taivtse.livecode.entity.Tag;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author taivt
@@ -11,4 +12,5 @@ import java.util.List;
  */
 public interface TagService {
     void linkBlogToTags(Blog blog, List<String> tagNames);
+    Map<Long, List<String>> getBlogTagsMap(List<Long> blogIds);
 }

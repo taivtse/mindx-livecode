@@ -2,14 +2,12 @@ package com.mindx.taivtse.livecode.controller;
 
 import com.mindx.taivtse.livecode.dto.request.BlogCreationRequest;
 import com.mindx.taivtse.livecode.dto.response.BlogCreationResponse;
+import com.mindx.taivtse.livecode.dto.response.BlogsResponse;
 import com.mindx.taivtse.livecode.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author taivt
@@ -26,5 +24,11 @@ public class BlogController {
     public ResponseEntity<BlogCreationResponse> createBlog(@RequestBody BlogCreationRequest request) {
         BlogCreationResponse blogCreationResponse = blogService.createBlog(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(blogCreationResponse);
+    }
+
+    @GetMapping
+    public ResponseEntity<BlogsResponse> getAllBlogs() {
+        BlogsResponse blogsResponse = blogService.getAllBlogs();
+        return ResponseEntity.ok(blogsResponse);
     }
 }

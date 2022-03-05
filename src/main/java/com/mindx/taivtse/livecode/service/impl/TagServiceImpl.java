@@ -9,6 +9,8 @@ import com.mindx.taivtse.livecode.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -48,5 +50,26 @@ public class TagServiceImpl implements TagService {
                     .build();
             tagRelationRepository.save(tagRelation);
         }
+    }
+
+    @Override
+    public Map<Long, List<String>> getBlogTagsMap(List<Long> blogIds) {
+        List<TagRelation> tagRelations = tagRelationRepository.findAllByBlogIdIn(blogIds);
+        List<Long> tagIds = tagRelations.stream()
+                .map(TagRelation::getTagId)
+                .collect(Collectors.toList());
+
+        List<Tag> tags = tagRepository.findAllById(tagIds);
+        Map<Long, String> tagMap = tags.stream()
+                .collect(Collectors.toMap(Tag::getId, Tag::getName));
+
+        Map<Long, List<String>> blogTagsMap = new HashMap<>();
+        for (TagRelation tagRelation : tagRelations) {
+            String tagName = tagMap.get(tagRelation.getTagId());
+            List<String> tagNames = blogTagsMap.computeIfAbsent(tagRelation.getBlogId(), missKey -> new ArrayList<>());
+            tagNames.add(tagName);
+        }
+
+        return blogTagsMap;
     }
 }

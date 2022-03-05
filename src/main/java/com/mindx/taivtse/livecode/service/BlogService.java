@@ -2,7 +2,7 @@ package com.mindx.taivtse.livecode.service;
 
 import com.mindx.taivtse.livecode.dto.request.BlogCreationRequest;
 import com.mindx.taivtse.livecode.dto.response.BlogCreationResponse;
-import org.springframework.stereotype.Service;
+import com.mindx.taivtse.livecode.dto.response.BlogsResponse;
 
 /**
  * @author taivt
@@ -10,4 +10,5 @@ import org.springframework.stereotype.Service;
  */
 public interface BlogService {
     BlogCreationResponse createBlog(BlogCreationRequest request);
+    BlogsResponse getAllBlogs();
 }

@@ -31,8 +31,8 @@ public class Blog implements Serializable {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @Column(name = "author_id", nullable = false)
+    private Long authorId;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
